@@ -66,6 +66,7 @@ const AddContact = ({show, handleClose}) => {
                 type='text'
                 placeholder='First Name'
                 value={firstName}
+                required
                 onChange={e => setFirstName(e.target.value)}
               />
             </Form.Group>
@@ -84,6 +85,7 @@ const AddContact = ({show, handleClose}) => {
                 type='text'
                 placeholder='Nickname'
                 value={nickName}
+                required
                 onChange={e => setNickName(e.target.value)}
               />
             </Form.Group>
@@ -93,6 +95,7 @@ const AddContact = ({show, handleClose}) => {
                 type='text'
                 placeholder='Date of Birth'
                 value={DOB}
+                required
                 onChange={e => setDOB(e.target.value)}
               />
             </Form.Group>
@@ -102,6 +105,7 @@ const AddContact = ({show, handleClose}) => {
                 type='text'
                 placeholder='Mobile Numbers'
                 value={mobileNumbers}
+                required
                 onChange={e => setMobileNumbers(e.target.value)}
               />
             </Form.Group>
@@ -117,7 +121,7 @@ const AddContact = ({show, handleClose}) => {
             <Button variant='secondary' onClick={handleClose}>
               Close
             </Button>
-            <Button variant='primary' type='submit'>
+            <Button variant='primary' type='submit' className='rounded-pill'>
               Save Contact
             </Button>
           </Form>
