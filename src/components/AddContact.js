@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Modal, Button, Form } from 'react-bootstrap';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AddContact = ({show, handleClose}) => {
   const [firstName, setFirstName] = useState('');
@@ -15,7 +16,7 @@ const AddContact = ({show, handleClose}) => {
   const contacts = useSelector(state => state);
 
   const dispatch = useDispatch();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   // const [showModal, setShowModal] = useState(false);
 
@@ -26,7 +27,7 @@ const AddContact = ({show, handleClose}) => {
     e.preventDefault();
 
 
-    const data = {
+      const data = {
       id: contacts.length > 0 ? contacts[contacts.length - 1].id + 1 : 1,
       firstName,
       lastName,
@@ -37,8 +38,15 @@ const AddContact = ({show, handleClose}) => {
     };
 
     dispatch({ type: 'ADD_CONTACT', payload: data });
-    toast.success('Contact added successfully!!');
-    // navigate('/');
+    toast('Contact added successfully!!');
+    setFirstName('');
+    setLastName('');
+    setNickName('');
+    setDOB('');
+    setMobileNumbers('');
+    setEmails('');
+    
+    navigate('/');
 
     
     handleClose();
