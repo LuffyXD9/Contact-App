@@ -4,7 +4,7 @@ import { Modal, Button, Form } from 'react-bootstrap';
 // import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-const AddContact = () => {
+const AddContact = ({show, handleClose}) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [nickName, setNickName] = useState('');
@@ -17,11 +17,11 @@ const AddContact = () => {
   const dispatch = useDispatch();
   // const navigate = useNavigate();
 
-  const [showModal, setShowModal] = useState(false);
+  // const [showModal, setShowModal] = useState(false);
 
-  const handleCloseModal = () => {
-    setShowModal(true);
-  };
+  // const handleCloseModal = () => {
+  //   setShowModal(true);
+  // };
   const handelSubmit = e => {
     e.preventDefault();
 
@@ -41,12 +41,12 @@ const AddContact = () => {
     // navigate('/');
 
     
-    handleCloseModal();
+    handleClose();
   };
 
   return (
     <div className='container'>
-      <Modal show={showModal} onHide={handleCloseModal}>
+      <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Add Contact</Modal.Title>
         </Modal.Header>
@@ -106,7 +106,7 @@ const AddContact = () => {
                 onChange={e => setEmails(e.target.value)}
               />
             </Form.Group>
-            <Button variant='secondary' onClick={handleCloseModal}>
+            <Button variant='secondary' onClick={handleClose}>
               Close
             </Button>
             <Button variant='primary' type='submit'>

@@ -1,10 +1,21 @@
 import React from "react";
+import {useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import { Button, ListGroup, Row, Col } from 'react-bootstrap';
+import { Button, ListGroup, Row, Col, Nav } from 'react-bootstrap';
+import AddContact from "./AddContact";
 
 const Content = () => {
+  const [showModal, setShowModal] = useState(false);
+
+  const handleShowModal = () => {
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
   const contacts = useSelector(state => state);
 
   const dispatch = useDispatch();
@@ -15,6 +26,7 @@ const Content = () => {
   }
   return (
     <>
+    <Nav/>
       <div className="container">
        <div className="row">
          <div className="col-md-12 my-5 text-end">
@@ -22,9 +34,8 @@ const Content = () => {
            {/* <Link to="/" className="btn btn-outline-dark">
            Add Contact
                </Link> */}
-               <Link to='/add'>
-            <div className="btn btn-primary">Add Contact</div>
-               </Link>
+            <div className="btn btn-primary" onClick={handleShowModal}>Add Contact</div>
+            <AddContact show={showModal} handleClose={handleCloseModal}/>
          </div>
          <Row>
         <Col md={{ span: 5, offset: 4 }}>
