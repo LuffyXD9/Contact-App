@@ -40,7 +40,7 @@ const EditContact = ({contact, edit, closeEdit}) => {
   return (
     <Modal show={edit} onHide={closeEdit}>
         <Modal.Header closeButton>
-          <Modal.Title>Add Contact</Modal.Title>
+          <Modal.Title>Edit Contact</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handelEdit}>
