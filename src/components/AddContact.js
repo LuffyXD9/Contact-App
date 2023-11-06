@@ -11,19 +11,12 @@ const AddContact = ({show, handleClose}) => {
   const [nickName, setNickName] = useState('');
   const [DOB, setDOB] = useState('');
   const [mobileNumbers, setMobileNumbers] = useState(['']);
-  // const [mobileNumberTwo, setMobileNumberTwo] = useState('');
   const [emails, setEmails] = useState(['']);
 
   const contacts = useSelector(state => state);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  // const [showModal, setShowModal] = useState(false);
-
-  // const handleCloseModal = () => {
-  //   setShowModal(true);
-  // };
 
   const handleAddPhoneNumber = () =>{
     setMobileNumbers([...mobileNumbers,'']);
@@ -46,7 +39,6 @@ const AddContact = ({show, handleClose}) => {
   const handelSubmit = e => {
     e.preventDefault();
 
-
       const data = {
       id: contacts.length > 0 ? contacts[contacts.length - 1].id + 1 : 1,
       firstName,
@@ -58,18 +50,16 @@ const AddContact = ({show, handleClose}) => {
     };
 
     dispatch({ type: 'ADD_CONTACT', payload: data });
-    toast('Contact added successfully!!');
+    toast.success('Contact added successfully!!');
     setFirstName('');
     setLastName('');
     setNickName('');
     setDOB('');
     setMobileNumbers(['']);
-    // setMobileNumberTwo('');
     setEmails(['']);
     
     navigate('/');
 
-    
     handleClose();
   };
 

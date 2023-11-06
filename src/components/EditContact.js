@@ -6,12 +6,11 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const EditContact = ({contact, edit, closeEdit}) => {
-    const [firstName, setFirstName] = useState(contact.firstName);
+  const [firstName, setFirstName] = useState(contact.firstName);
   const [lastName, setLastName] = useState(contact.lastName);
   const [nickName, setNickName] = useState(contact.nickName);
   const [DOB, setDOB] = useState(contact.DOB);
   const [mobileNumbers, setMobileNumbers] = useState(contact.mobileNumbers);
-  // const [mobileNumberTwo, setMobileNumberTwo] = useState(contact.mobileNumberTwo);
   const [emails, setEmails] = useState(contact.emails);
 
   const dispatch = useDispatch();
@@ -45,14 +44,12 @@ const EditContact = ({contact, edit, closeEdit}) => {
       nickName,
       DOB,
       mobileNumbers,
-      // mobileNumberTwo,
       emails, 
     };
 
     dispatch({ type: 'UPDATE_CONTACT', payload: data });
-    toast('Contact edited successfully!!');
+    toast.success('Contact edited successfully!!');
     navigate('/');
-
     closeEdit();
   };
 

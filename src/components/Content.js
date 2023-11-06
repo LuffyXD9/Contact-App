@@ -1,7 +1,5 @@
-import React from "react";
-import { useState } from "react";
+import React, {useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Button, ListGroup, Row, Col } from "react-bootstrap";
 import AddContact from "./AddContact";
@@ -26,15 +24,12 @@ const Content = () => {
     setEditModal(true);
   };
 
-  const handleEditClose = () => {
-    setEditModal(false);
+  const handleViewModal = () => {
+    setViewModal(true);
   };
 
-  const handleViewModal = () => {
-    // console.log("clicked");
-    // console.log(contacts);
-    setViewModal(true);
-    // console.log({viewModal});
+  const handleEditClose = () => {
+    setEditModal(false);
   };
 
   const handleCloseModal = () => {
@@ -127,9 +122,7 @@ const Content = () => {
     </Row>
   </div>
 </div>
-
-
-    </>
+   </>
   );
 };
 

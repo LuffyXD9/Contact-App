@@ -1,19 +1,8 @@
 import React from 'react'
 import { Button, Modal, Form } from 'react-bootstrap';
-// import { useNavigate } from 'react-router-dom';
 
 const ViewContact = ({contact, view, closeView}) => {
-    // const [showView, setShowView] = useState(view);
-
-    // console.log(contact);
-
-    // const navigate = useNavigate();
-
-    // const handleCloseView = () =>{
-    //     setShowView(false);
-    //     navigate('/');
-    //     closeView();
-    // }
+    
   return (
     <Modal show={view} onHide={closeView}>
       <Modal.Header closeButton>
