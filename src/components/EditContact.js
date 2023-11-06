@@ -10,7 +10,8 @@ const EditContact = ({contact, edit, closeEdit}) => {
   const [lastName, setLastName] = useState(contact.lastName);
   const [nickName, setNickName] = useState(contact.nickName);
   const [DOB, setDOB] = useState(contact.DOB);
-  const [mobileNumbers, setMobileNumbers] = useState(contact.mobileNumbers.join(' '));
+  const [mobileNumbers, setMobileNumbers] = useState(contact.mobileNumbers);
+  const [mobileNumberTwo, setMobileNumberTwo] = useState(contact.mobileNumberTwo);
   const [emails, setEmails] = useState(contact.emails.join(' '));
 
   const dispatch = useDispatch();
@@ -25,7 +26,8 @@ const EditContact = ({contact, edit, closeEdit}) => {
       lastName,
       nickName,
       DOB,
-      mobileNumbers: mobileNumbers.split(','),
+      mobileNumbers,
+      mobileNumberTwo,
       emails: emails.split(','), 
     };
 
@@ -81,12 +83,21 @@ const EditContact = ({contact, edit, closeEdit}) => {
               />
             </Form.Group>
             <Form.Group>
-              <Form.Label>Mobile Numbers (comma-separated)</Form.Label>
+              <Form.Label>Mobile Number 1</Form.Label>
               <Form.Control
                 type='text'
                 placeholder='Mobile Numbers'
                 value={mobileNumbers}
                 onChange={e => setMobileNumbers(e.target.value)}
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Mobile Number 2</Form.Label>
+              <Form.Control
+                type='text'
+                placeholder='Mobile Numbers'
+                value={mobileNumberTwo}
+                onChange={e => setMobileNumberTwo(e.target.value)}
               />
             </Form.Group>
             <Form.Group>

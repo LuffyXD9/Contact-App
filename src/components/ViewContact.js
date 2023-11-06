@@ -38,8 +38,12 @@ const ViewContact = ({contact, view, closeView}) => {
             <Form.Control type="text" readOnly value={contact.DOB} />
           </Form.Group>
           <Form.Group>
-            <Form.Label>Mobile Numbers:</Form.Label>
-            <Form.Control type="text" readOnly value={contact.mobileNumbers.join(", ")} />
+            <Form.Label>Mobile Number 1:</Form.Label>
+            <Form.Control type="text" readOnly value={contact.mobileNumbers} />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Mobile Number 2:</Form.Label>
+            <Form.Control type="text" readOnly value={contact.mobileNumberTwo} />
           </Form.Group>
           <Form.Group>
             <Form.Label>Emails:</Form.Label>

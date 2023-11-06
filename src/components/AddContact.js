@@ -11,6 +11,7 @@ const AddContact = ({show, handleClose}) => {
   const [nickName, setNickName] = useState('');
   const [DOB, setDOB] = useState('');
   const [mobileNumbers, setMobileNumbers] = useState('');
+  const [mobileNumberTwo, setMobileNumberTwo] = useState('');
   const [emails, setEmails] = useState('');
 
   const contacts = useSelector(state => state);
@@ -33,7 +34,8 @@ const AddContact = ({show, handleClose}) => {
       lastName,
       nickName,
       DOB,
-      mobileNumbers: mobileNumbers.split(','), 
+      mobileNumbers,
+      mobileNumberTwo, 
       emails: emails.split(','), 
     };
 
@@ -44,6 +46,7 @@ const AddContact = ({show, handleClose}) => {
     setNickName('');
     setDOB('');
     setMobileNumbers('');
+    setMobileNumberTwo('');
     setEmails('');
     
     navigate('/');
@@ -100,13 +103,23 @@ const AddContact = ({show, handleClose}) => {
               />
             </Form.Group>
             <Form.Group>
-              <Form.Label>Mobile Numbers (comma-separated)</Form.Label>
+              <Form.Label>Mobile Number 1</Form.Label>
               <Form.Control
                 type='text'
-                placeholder='Mobile Numbers'
+                placeholder='Mobile Number'
                 value={mobileNumbers}
                 required
                 onChange={e => setMobileNumbers(e.target.value)}
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Mobile Number 2</Form.Label>
+              <Form.Control
+                type='text'
+                placeholder='Mobile Number'
+                value={mobileNumberTwo}
+                required
+                onChange={e => setMobileNumberTwo(e.target.value)}
               />
             </Form.Group>
             <Form.Group>
