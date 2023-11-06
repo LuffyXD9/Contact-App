@@ -5,7 +5,7 @@ import { Button, Modal, Form } from 'react-bootstrap';
 const ViewContact = ({contact, view, closeView}) => {
     // const [showView, setShowView] = useState(view);
 
-    console.log(contact);
+    // console.log(contact);
 
     // const navigate = useNavigate();
 
@@ -38,16 +38,16 @@ const ViewContact = ({contact, view, closeView}) => {
             <Form.Control type="text" readOnly value={contact.DOB} />
           </Form.Group>
           <Form.Group>
-            <Form.Label>Mobile Number 1:</Form.Label>
-            <Form.Control type="text" readOnly value={contact.mobileNumbers} />
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Mobile Number 2:</Form.Label>
-            <Form.Control type="text" readOnly value={contact.mobileNumberTwo} />
+            <Form.Label>Mobile Numbers:</Form.Label>
+            {contact.mobileNumbers.map((number, index)=>(
+              <Form.Control type="number" key={index} readOnly value={number} />
+            ))}
           </Form.Group>
           <Form.Group>
             <Form.Label>Emails:</Form.Label>
-            <Form.Control type="text" readOnly value={contact.emails.join(", ")} />
+            {contact.emails.map((email, index)=>(
+              <Form.Control type="text" key={index} readOnly value={email} />
+            ))}
           </Form.Group>
         </Form>
       </Modal.Body>

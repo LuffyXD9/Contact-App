@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Modal, Button, Form } from 'react-bootstrap';
+import { Modal, Button, Form,InputGroup } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -10,9 +10,9 @@ const AddContact = ({show, handleClose}) => {
   const [lastName, setLastName] = useState('');
   const [nickName, setNickName] = useState('');
   const [DOB, setDOB] = useState('');
-  const [mobileNumbers, setMobileNumbers] = useState('');
-  const [mobileNumberTwo, setMobileNumberTwo] = useState('');
-  const [emails, setEmails] = useState('');
+  const [mobileNumbers, setMobileNumbers] = useState(['']);
+  // const [mobileNumberTwo, setMobileNumberTwo] = useState('');
+  const [emails, setEmails] = useState(['']);
 
   const contacts = useSelector(state => state);
 
@@ -24,6 +24,25 @@ const AddContact = ({show, handleClose}) => {
   // const handleCloseModal = () => {
   //   setShowModal(true);
   // };
+
+  const handleAddPhoneNumber = () =>{
+    setMobileNumbers([...mobileNumbers,'']);
+  }
+
+  const handleRemovePhoneNumber = (index) =>{
+    const filteredPhoneNumbers = mobileNumbers.filter((_,i)=> i !== index);
+    setMobileNumbers(filteredPhoneNumbers);
+  }
+
+  const handleAddEmails = () =>{
+    setEmails([...emails,'']);
+  }
+
+  const handleRemoveEmails = (index) =>{
+    const filteredEmails = emails.filter((_,i)=> i !== index);
+    setEmails(filteredEmails);
+  }
+
   const handelSubmit = e => {
     e.preventDefault();
 
@@ -35,8 +54,7 @@ const AddContact = ({show, handleClose}) => {
       nickName,
       DOB,
       mobileNumbers,
-      mobileNumberTwo, 
-      emails: emails.split(','), 
+      emails, 
     };
 
     dispatch({ type: 'ADD_CONTACT', payload: data });
@@ -45,9 +63,9 @@ const AddContact = ({show, handleClose}) => {
     setLastName('');
     setNickName('');
     setDOB('');
-    setMobileNumbers('');
-    setMobileNumberTwo('');
-    setEmails('');
+    setMobileNumbers(['']);
+    // setMobileNumberTwo('');
+    setEmails(['']);
     
     navigate('/');
 
@@ -95,7 +113,7 @@ const AddContact = ({show, handleClose}) => {
             <Form.Group>
               <Form.Label>Date of Birth</Form.Label>
               <Form.Control
-                type='text'
+                type='date'
                 placeholder='Date of Birth'
                 value={DOB}
                 required
@@ -103,35 +121,62 @@ const AddContact = ({show, handleClose}) => {
               />
             </Form.Group>
             <Form.Group>
-              <Form.Label>Mobile Number 1</Form.Label>
-              <Form.Control
-                type='text'
-                placeholder='Mobile Number'
-                value={mobileNumbers}
-                required
-                onChange={e => setMobileNumbers(e.target.value)}
-              />
+              <Form.Label>Mobile Numbers</Form.Label>
+              {mobileNumbers.map((number, index) => (
+                <InputGroup key={index} className="mb-2">
+                  <Form.Control
+                    type="number"
+                    placeholder="Mobile Number"
+                    value={number}
+                    required
+                    onChange={(e) => {
+                      const updatedNumbers = [...mobileNumbers];
+                      updatedNumbers[index] = e.target.value;
+                      setMobileNumbers(updatedNumbers);
+                    }}
+                  />
+                  <Button
+                    variant="danger"
+                    onClick={() => handleRemovePhoneNumber(index)}
+                    disabled={index === 0}
+                  >
+                    -
+                  </Button>
+                </InputGroup>
+              ))}
+              <Button variant="success" onClick={handleAddPhoneNumber}>
+                +
+              </Button>
             </Form.Group>
             <Form.Group>
-              <Form.Label>Mobile Number 2</Form.Label>
-              <Form.Control
-                type='text'
-                placeholder='Mobile Number'
-                value={mobileNumberTwo}
-                required
-                onChange={e => setMobileNumberTwo(e.target.value)}
-              />
+              <Form.Label>Emails</Form.Label>
+              {emails.map((email, index) => (
+                <InputGroup key={index} className="mb-2">
+                  <Form.Control
+                    type="text"
+                    placeholder="Email"
+                    value={email}
+                    required
+                    onChange={(e) => {
+                      const updatedEmails = [...emails];
+                      updatedEmails[index] = e.target.value;
+                      setEmails(updatedEmails);
+                    }}
+                  />
+                  <Button
+                    variant="danger"
+                    onClick={() => handleRemoveEmails(index)}
+                    disabled={index === 0}
+                  >
+                    -
+                  </Button>
+                </InputGroup>
+              ))}
+              <Button variant="success" onClick={handleAddEmails}>
+                +
+              </Button>
             </Form.Group>
-            <Form.Group>
-              <Form.Label>Emails (comma-separated)</Form.Label>
-              <Form.Control
-                type='text'
-                placeholder='Emails'
-                value={emails}
-                onChange={e => setEmails(e.target.value)}
-              />
-            </Form.Group>
-            <Button variant='secondary' onClick={handleClose}>
+            <Button variant='secondary' className='rounded-pill my-2 mx-2' onClick={handleClose}>
               Close
             </Button>
             <Button variant='primary' type='submit' className='rounded-pill'>
