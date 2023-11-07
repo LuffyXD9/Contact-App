@@ -6,12 +6,21 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const AddContact = ({show, handleClose}) => {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [nickName, setNickName] = useState('');
-  const [DOB, setDOB] = useState('');
-  const [mobileNumbers, setMobileNumbers] = useState(['']);
-  const [emails, setEmails] = useState(['']);
+  // const [firstName, setFirstName] = useState('');
+  // const [lastName, setLastName] = useState('');
+  // const [nickName, setNickName] = useState('');
+  // const [DOB, setDOB] = useState('');
+  // const [mobileNumbers, setMobileNumbers] = useState(['']);
+  // const [emails, setEmails] = useState(['']);
+
+  const [contactData, setContactData] = useState({
+    firstName : '',
+    lastName : '',
+    nickname : '',
+    DOB : '',
+    mobileNumbers: [''],
+    emails: [''],
+  });
 
   const contacts = useSelector(state => state);
 
@@ -19,21 +28,37 @@ const AddContact = ({show, handleClose}) => {
   const navigate = useNavigate();
 
   const handleAddPhoneNumber = () =>{
-    setMobileNumbers([...mobileNumbers,'']);
+    // setMobileNumbers([...mobileNumbers,'']);
+    setContactData({
+      ...contactData,
+      mobileNumbers : [...contactData.mobileNumbers,''],
+    });
   }
 
   const handleRemovePhoneNumber = (index) =>{
-    const filteredPhoneNumbers = mobileNumbers.filter((_,i)=> i !== index);
-    setMobileNumbers(filteredPhoneNumbers);
+    const filteredPhoneNumbers = contactData.mobileNumbers.filter((_,i)=> i !== index);
+    // setMobileNumbers(filteredPhoneNumbers);
+    setContactData({
+      ...contactData,
+      mobileNumbers : filteredPhoneNumbers,
+    });
   }
 
   const handleAddEmails = () =>{
-    setEmails([...emails,'']);
+    // setEmails([...emails,'']);
+    setContactData({
+      ...contactData,
+      emails : [...contactData.emails,''],
+    })
   }
 
   const handleRemoveEmails = (index) =>{
-    const filteredEmails = emails.filter((_,i)=> i !== index);
-    setEmails(filteredEmails);
+    const filteredEmails = contactData.emails.filter((_,i)=> i !== index);
+    // setEmails(filteredEmails);
+    setContactData({
+      ...contactData,
+      emails : filteredEmails,
+    })
   }
 
   const handelSubmit = e => {
@@ -41,22 +66,31 @@ const AddContact = ({show, handleClose}) => {
 
       const data = {
       id: contacts.length > 0 ? contacts[contacts.length - 1].id + 1 : 1,
-      firstName,
-      lastName,
-      nickName,
-      DOB,
-      mobileNumbers,
-      emails, 
+      // firstName,
+      // lastName,
+      // nickName,
+      // DOB,
+      // mobileNumbers,
+      // emails, 
+      ...contactData,
     };
 
     dispatch({ type: 'ADD_CONTACT', payload: data });
     toast.success('Contact added successfully!!');
-    setFirstName('');
-    setLastName('');
-    setNickName('');
-    setDOB('');
-    setMobileNumbers(['']);
-    setEmails(['']);
+    // setFirstName('');
+    // setLastName('');
+    // setNickName('');
+    // setDOB('');
+    // setMobileNumbers(['']);
+    // setEmails(['']);
+    setContactData({
+      firstName : '',
+      lastName : '',
+      nickname : '',
+      DOB : '',
+      mobileNumbers : [''],
+      emails : [''],
+    });
     
     navigate('/');
 
@@ -76,9 +110,9 @@ const AddContact = ({show, handleClose}) => {
               <Form.Control
                 type='text'
                 placeholder='First Name'
-                value={firstName}
+                value={contactData.firstName}
                 required
-                onChange={e => setFirstName(e.target.value)}
+                onChange={e => setContactData({...contactData, firstName: e.target.value})}
               />
             </Form.Group>
             <Form.Group>
@@ -86,8 +120,8 @@ const AddContact = ({show, handleClose}) => {
               <Form.Control
                 type='text'
                 placeholder='Last Name'
-                value={lastName}
-                onChange={e => setLastName(e.target.value)}
+                value={contactData.lastName}
+                onChange={e => setContactData({...contactData, lastName : e.target.value})}
               />
             </Form.Group>
             <Form.Group>
@@ -95,9 +129,9 @@ const AddContact = ({show, handleClose}) => {
               <Form.Control
                 type='text'
                 placeholder='Nickname'
-                value={nickName}
+                value={contactData.nickName}
                 required
-                onChange={e => setNickName(e.target.value)}
+                onChange={e => setContactData({...contactData, nickname : e.target.value})}
               />
             </Form.Group>
             <Form.Group>
@@ -105,14 +139,14 @@ const AddContact = ({show, handleClose}) => {
               <Form.Control
                 type='date'
                 placeholder='Date of Birth'
-                value={DOB}
+                value={contactData.DOB}
                 required
-                onChange={e => setDOB(e.target.value)}
+                onChange={e => setContactData({...contactData,DOB : e.target.value})}
               />
             </Form.Group>
             <Form.Group>
               <Form.Label>Mobile Numbers</Form.Label>
-              {mobileNumbers.map((number, index) => (
+              {contactData.mobileNumbers.map((number, index) => (
                 <InputGroup key={index} className="mb-2">
                   <Form.Control
                     type="number"
@@ -120,9 +154,10 @@ const AddContact = ({show, handleClose}) => {
                     value={number}
                     required
                     onChange={(e) => {
-                      const updatedNumbers = [...mobileNumbers];
+                      const updatedNumbers = [...contactData.mobileNumbers];
                       updatedNumbers[index] = e.target.value;
-                      setMobileNumbers(updatedNumbers);
+                      setContactData({...contactData, mobileNumbers : updatedNumbers,
+                      });
                     }}
                   />
                   <Button
@@ -140,7 +175,7 @@ const AddContact = ({show, handleClose}) => {
             </Form.Group>
             <Form.Group>
               <Form.Label>Emails</Form.Label>
-              {emails.map((email, index) => (
+              {contactData.emails.map((email, index) => (
                 <InputGroup key={index} className="mb-2">
                   <Form.Control
                     type="text"
@@ -148,9 +183,11 @@ const AddContact = ({show, handleClose}) => {
                     value={email}
                     required
                     onChange={(e) => {
-                      const updatedEmails = [...emails];
+                      const updatedEmails = [...contactData.emails];
                       updatedEmails[index] = e.target.value;
-                      setEmails(updatedEmails);
+                      setContactData({
+                        ...contactData,
+                        emails : updatedEmails});
                     }}
                   />
                   <Button
