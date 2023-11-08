@@ -1,99 +1,60 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Modal, Button, Form,InputGroup } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { Modal, Button, Form, InputGroup } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const AddContact = ({show, handleClose}) => {
-  // const [firstName, setFirstName] = useState('');
-  // const [lastName, setLastName] = useState('');
-  // const [nickName, setNickName] = useState('');
-  // const [DOB, setDOB] = useState('');
-  // const [mobileNumbers, setMobileNumbers] = useState(['']);
-  // const [emails, setEmails] = useState(['']);
-
-  const [contactData, setContactData] = useState({
-    firstName : '',
-    lastName : '',
-    nickname : '',
-    DOB : '',
+const AddContact = ({ show, handleClose }) => {
+  const dispatch = useDispatch();
+  const initialValues = {
+    firstName: '',
+    lastName: '',
+    nickName: '',
+    DOB: '',
     mobileNumbers: [''],
     emails: [''],
-  });
+  };
 
-  const contacts = useSelector(state => state);
+  const [contactData, setContactData] = React.useState(initialValues);
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const handleAddPhoneNumber = () => {
+    setContactData((prevData) => ({
+      ...prevData,
+      mobileNumbers: [...prevData.mobileNumbers, ''],
+    }));
+  };
 
-  const handleAddPhoneNumber = () =>{
-    // setMobileNumbers([...mobileNumbers,'']);
-    setContactData({
-      ...contactData,
-      mobileNumbers : [...contactData.mobileNumbers,''],
-    });
-  }
+  const handleRemovePhoneNumber = (index) => {
+    setContactData((prevData) => ({
+      ...prevData,
+      mobileNumbers: prevData.mobileNumbers.filter((_, i) => i !== index),
+    }));
+  };
 
-  const handleRemovePhoneNumber = (index) =>{
-    const filteredPhoneNumbers = contactData.mobileNumbers.filter((_,i)=> i !== index);
-    // setMobileNumbers(filteredPhoneNumbers);
-    setContactData({
-      ...contactData,
-      mobileNumbers : filteredPhoneNumbers,
-    });
-  }
+  const handleAddEmails = () => {
+    setContactData((prevData) => ({
+      ...prevData,
+      emails: [...prevData.emails, ''],
+    }));
+  };
 
-  const handleAddEmails = () =>{
-    // setEmails([...emails,'']);
-    setContactData({
-      ...contactData,
-      emails : [...contactData.emails,''],
-    })
-  }
+  const handleRemoveEmails = (index) => {
+    setContactData((prevData) => ({
+      ...prevData,
+      emails: prevData.emails.filter((_, i) => i !== index),
+    }));
+  };
 
-  const handleRemoveEmails = (index) =>{
-    const filteredEmails = contactData.emails.filter((_,i)=> i !== index);
-    // setEmails(filteredEmails);
-    setContactData({
-      ...contactData,
-      emails : filteredEmails,
-    })
-  }
-
-  const handelSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-
-      const data = {
-      id: contacts.length > 0 ? contacts[contacts.length - 1].id + 1 : 1,
-      // firstName,
-      // lastName,
-      // nickName,
-      // DOB,
-      // mobileNumbers,
-      // emails, 
+    const data = {
+      id: Date.now(), 
       ...contactData,
     };
 
     dispatch({ type: 'ADD_CONTACT', payload: data });
-    toast.success('Contact added successfully!!');
-    // setFirstName('');
-    // setLastName('');
-    // setNickName('');
-    // setDOB('');
-    // setMobileNumbers(['']);
-    // setEmails(['']);
-    setContactData({
-      firstName : '',
-      lastName : '',
-      nickname : '',
-      DOB : '',
-      mobileNumbers : [''],
-      emails : [''],
-    });
-    
-    navigate('/');
-
+    toast.success('Contact added successfully!');
+    setContactData(initialValues);
     handleClose();
   };
 
@@ -104,7 +65,7 @@ const AddContact = ({show, handleClose}) => {
           <Modal.Title>Add Contact</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form onSubmit={handelSubmit}>
+          <Form onSubmit={handleSubmit}>
             <Form.Group>
               <Form.Label>First Name</Form.Label>
               <Form.Control
@@ -131,7 +92,7 @@ const AddContact = ({show, handleClose}) => {
                 placeholder='Nickname'
                 value={contactData.nickName}
                 required
-                onChange={e => setContactData({...contactData, nickname : e.target.value})}
+                onChange={e => setContactData({...contactData, nickName : e.target.value})}
               />
             </Form.Group>
             <Form.Group>
@@ -141,7 +102,7 @@ const AddContact = ({show, handleClose}) => {
                 placeholder='Date of Birth'
                 value={contactData.DOB}
                 required
-                onChange={e => setContactData({...contactData,DOB : e.target.value})}
+                onChange={e => setContactData({...contactData, DOB : e.target.value})}
               />
             </Form.Group>
             <Form.Group>

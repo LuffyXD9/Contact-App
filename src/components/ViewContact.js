@@ -2,6 +2,12 @@ import React from 'react'
 import { Button, Modal, Form } from 'react-bootstrap';
 
 const ViewContact = ({contact, view, closeView}) => {
+
+  if (!contact) {
+    return null;
+  }
+
+  // console.log(contact.nickName);
     
   return (
     <Modal show={view} onHide={closeView}>
