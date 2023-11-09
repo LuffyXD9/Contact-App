@@ -3,16 +3,12 @@ import { useDispatch } from 'react-redux';
 import { Modal, Button, Form, InputGroup } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 
-const EditContact = ({ contact ,edit}) => {
-  const [editedContact, setEditedContact] = useState({ ...contact });
-  const [showEdit, setShowEdit] = useState(edit);
+const EditContact = ({ contact ,edit,closeEdit}) => {
+  const [editedContact, setEditedContact] = useState({...contact});
 
-  // const [editModal,setEditModal] = useState('false');
-  console.log(editedContact);
-
-  // if(editedContact !== undefined){
-  //   setEditModal(true);
-  // }
+  useEffect(()=>{
+    setEditedContact(contact);
+  },[contact]);
 
   const dispatch = useDispatch();
 
@@ -48,14 +44,6 @@ const EditContact = ({ contact ,edit}) => {
     });
   };
 
-  // const handleEditClose = ()=>{
-  //   setEditModal(false);
-  // }
-
-  useEffect(()=>{
-    setEditedContact({...contact});
-  },[contact])
-
   const handleEdit = (e) => {
     e.preventDefault();
 
@@ -66,13 +54,11 @@ const EditContact = ({ contact ,edit}) => {
 
     dispatch({ type: 'UPDATE_CONTACT', payload: data });
     toast.success('Contact edited successfully!');
-    setShowEdit(false);
+    closeEdit();
   };
-  const handleClose =()=> {
-    setShowEdit(false);
-  }
+
   return (
-    <Modal show={showEdit} onHide={handleClose}>
+    <Modal show={edit} onHide={closeEdit}>
       <Modal.Header closeButton>
         <Modal.Title>Edit Contact</Modal.Title>
       </Modal.Header>
@@ -127,7 +113,7 @@ const EditContact = ({ contact ,edit}) => {
             {editedContact.mobileNumbers.map((number, index) => (
               <InputGroup key={index} className="mb-2">
                 <Form.Control
-                  type="text"
+                  type="Number"
                   placeholder="Mobile Number"
                   value={number}
                   required
@@ -184,7 +170,7 @@ const EditContact = ({ contact ,edit}) => {
               +
             </Button>
           </Form.Group>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button variant="secondary" onClick={closeEdit}>
             Close
           </Button>
           <Button variant="primary" type="submit">

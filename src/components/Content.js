@@ -13,8 +13,8 @@ const Content = () => {
   const [editModal, setEditModal] = React.useState(false);
   const [searchText, setSearchText] = React.useState('');
   const [specificContact, setSpecificContact] = React.useState();
-  // const [editModalId, setEditModalId] = React.useState(null);
-  const [editContactData, setEditContactData] = React.useState(null);
+  const [editContactData, setEditContactData] = React.useState();
+
   
   const contacts = useSelector((state) => state);
   const dispatch = useDispatch();
@@ -39,10 +39,6 @@ const Content = () => {
     setViewModal(true);
   };
 
-  // const handleEditClose = () => {
-  //   setEditModal(false);
-  // };
-
   const handleCloseModal = () => {
     setShowModal(false);
   };
@@ -55,11 +51,9 @@ const Content = () => {
     // console.log('specificContact:', specificContact);
   }, [specificContact]);
 
-  const handleEditModal = (contactId) => {
-    const contactData = contacts.find((contact) => contact.id === contactId);
-    if (contactData) {
-      // setEditModalId(contactId);
-      setEditContactData(contactData);
+  const handleEditModal = (contact) => {
+    if(contact){
+      setEditContactData(contact);
       setEditModal(true);
     }
   };
@@ -115,16 +109,16 @@ const Content = () => {
                         <Button
                           variant="warning"
                           className="rounded-circle"
-                          onClick={() => handleEditModal(contact.id)}
+                          onClick={() => handleEditModal(contact)}
                         >
                           <i className="far fa-edit"></i> Edit
                         </Button>
-                        {/* {editModal && (
+                        {editModal && (
                         <EditContact
-                          contact={specificContact}
+                          contact={editContactData}
                           edit={editModal}
                           closeEdit={() => setEditModal(false)}
-                        />)} */}
+                        />)}
                         <Button
                           variant="danger"
                           className="rounded-circle"
@@ -141,12 +135,6 @@ const Content = () => {
           </Row>
         </div>
       </div>
-      {editModal && editContactData && (
-    <EditContact
-      contact={editContactData}
-      edit={editModal}
-    />
-  )}
     </>
   );
 };

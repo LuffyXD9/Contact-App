@@ -48,7 +48,7 @@ const AddContact = ({ show, handleClose }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = {
-      id: Date.now(), 
+      id: Date.now(), // changed id to use date
       ...contactData,
     };
 
